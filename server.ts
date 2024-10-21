@@ -3,7 +3,8 @@ import { DB_Connection } from './src/dataBase/config';
 
 import indexRouter from './src/routes/indexRoutes'
 import authRouter from './src/routes/authRoutes'
-
+import productRouter from './src/routes/productRoutes'
+import { seedDatabase } from './seed';
 
 export class Server{
     private app: Express;
@@ -41,7 +42,7 @@ export class Server{
         this.app.use(this.indexPath, indexRouter)
 
         this.app.use(this.authPath, authRouter)
-        this.app.use(this.productPath, indexRouter)
+        this.app.use(this.productPath, productRouter)
         this.app.use(this.ordersPath, indexRouter)
     };
 

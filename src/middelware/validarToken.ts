@@ -5,7 +5,8 @@ export const validarToken = (req:Request,res:Response,next:NextFunction) =>{
     const token = req.header('x-token');
 
     if(!token){
-        return res.status(401).json({msg:'No hay token en la petición'});
+        res.status(401).json({msg:'No hay token en la petición'});
+        return ;
     }else{
         verifyToken(token) && next();
     }

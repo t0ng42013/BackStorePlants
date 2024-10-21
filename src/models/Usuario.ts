@@ -1,8 +1,6 @@
 import { model, Schema } from "mongoose";
 
 
-
-
 const UserSchema = new Schema({
     nombre: {
         type: String,
@@ -15,6 +13,14 @@ const UserSchema = new Schema({
     role: {
         type: String,
         default: 'USER_ROLE'
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     }
 });
 

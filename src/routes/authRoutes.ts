@@ -5,9 +5,6 @@ import { errores } from "../middelware/errores";
 import { check } from "express-validator/";
 
 
-
-
-
 const router = express.Router();
 
 router.post('/register', [
