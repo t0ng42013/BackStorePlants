@@ -1,11 +1,18 @@
-import { IProduct } from "./IProduct";
+import { Schema } from "mongoose";
+
+
+export interface IOrderProduct {
+    productID: Schema.Types.ObjectId;
+    quantity: number;
+    price: number;
+}
 
 export interface IOrder{
-    user: string;
+    userID: Schema.Types.ObjectId;
     amount: number;
     status: boolean;
     total: number;
-    product: IProduct[];
-    create_at: Date;
-    update_at: Date;
+    products: IOrderProduct[];
+    created_at: Date;
+    updated_at: Date;
 }

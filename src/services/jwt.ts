@@ -1,29 +1,34 @@
 import jwt from 'jsonwebtoken';
 
 
-export const generateToken = (id: string) => {
+export const generateToken = (id: string,isAdmin:boolean) => {
     const KEY = process.env.JWT_SECRET_KEY
     try {
         if (!KEY) {
             throw new Error('No existe la clave secreta');
         }
 
-        const token = jwt.sign({ id }, KEY, { expiresIn: '4h' });
+        const token = jwt.sign({
+             id,
+             isAdmin
+             },
+              KEY,
+               { expiresIn: '1h' });
         return token;
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 };
 
 
-export const verifyToken = (token: string) => {
+export const verifyToken= (token: string) => {
     const KEY = process.env.JWT_SECRET_KEY
-    try {
-        if (!KEY) {
-            throw new Error('No existe la clave secreta');
-        }
+    if (!KEY) {
+        throw new Error('No existe la clave secreta');
+    }
 
-        const tokenValid = jwt.verify(token, KEY);
+    try {
+        const tokenValid = jwt.verify(token, KEY)
         return tokenValid;
     } catch (error) {
         console.log(error)

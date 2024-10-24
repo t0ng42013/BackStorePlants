@@ -1,10 +1,11 @@
 import express,{ Express } from "express";
+import cors from "cors";
 import { DB_Connection } from './src/dataBase/config';
 
 import indexRouter from './src/routes/indexRoutes'
 import authRouter from './src/routes/authRoutes'
 import productRouter from './src/routes/productRoutes'
-import { seedDatabase } from './seed';
+import orderRouter from './src/routes/orderRoutes'
 
 export class Server{
     private app: Express;
@@ -34,6 +35,7 @@ export class Server{
     }
 
     private middelware(){
+        this.app.use(cors());
         this.app.use(express.json());
     };
 
@@ -43,7 +45,7 @@ export class Server{
 
         this.app.use(this.authPath, authRouter)
         this.app.use(this.productPath, productRouter)
-        this.app.use(this.ordersPath, indexRouter)
+        this.app.use(this.ordersPath, orderRouter)
     };
 
     public start(){

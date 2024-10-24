@@ -1,8 +1,9 @@
 import { model, Schema } from "mongoose";
+import { IUser } from "../interface/IUser";
 
 
-const UserSchema = new Schema({
-    nombre: {
+const UserSchema = new Schema<IUser>({
+    name: {
         type: String,
         required: [true, 'El nombre es necesario']
     },
@@ -11,8 +12,8 @@ const UserSchema = new Schema({
         required: [true, 'La contraseña es necesaria']
     },
     role: {
-        type: String,
-        default: 'USER_ROLE'
+        type: Boolean,
+        default: false
     },
     created_at: {
         type: Date,

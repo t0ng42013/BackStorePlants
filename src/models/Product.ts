@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IProduct } from "../interface/IProduct";
+import { updateProduct } from '../controllers/productController';
 
 const ProductSchema = new Schema<IProduct>({
     name:{
