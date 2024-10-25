@@ -40,7 +40,6 @@ export class Server{
     };
 
     private routes() {
-        console.log('entrando a rutas')
         this.app.use(this.indexPath, indexRouter)
 
         this.app.use(this.authPath, authRouter)

@@ -12,8 +12,8 @@ const UserSchema = new Schema<IUser>({
         required: [true, 'La contraseña es necesaria']
     },
     role: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: 'User'
     },
     created_at: {
         type: Date,

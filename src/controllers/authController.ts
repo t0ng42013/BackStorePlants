@@ -6,7 +6,7 @@ import { generateToken } from "../services/jwt";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { name, password } = req.body;
-
+console.log('register')
     try {
         const usuario = await Usuario.findOne({ name });
 
@@ -15,7 +15,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             
             usuario.password = await hashPass(password);
             await usuario.save();
-            res.status(200).json(usuario);
+
+            const token = generateToken(usuario.id, usuario.role, usuario.name);
+            res.status(200).json({ token,usuario });
             console.log(usuario)
             return;
         }
@@ -38,7 +40,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         }
        
         if (password === process.env.KEY_ADMIN) {         
-            await Usuario.findOneAndUpdate({ name }, { role: true, updated_at: new Date() }); 
+            await Usuario.findOneAndUpdate({ name }, { role: 'Admin', updated_at: new Date() }); 
+            res.json({ msg: 'Bienvenido Admin' });
         } else {
             const passMatch = await comparePass(password, usuario.password);
 
@@ -49,13 +52,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         }
 
+        
+        const token = generateToken(usuario.id, usuario.role, usuario.name);
         console.log(usuario.role)
-        const token = generateToken(usuario.id,  usuario.role);
-        res.status(200).json({ token, role: usuario.role });
+        res.status(200).json({ token });
 
 
     } catch (error) {
-        console.log(error)
+        res.status(400).json({ msg: 'Error en el login' });
     }
 };
 

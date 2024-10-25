@@ -8,7 +8,6 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
     try {
         const product = await Product.find();
         res.status(200).json(product);
-        console.log('object')
     } catch (error) {
         console.log(error)
     }
