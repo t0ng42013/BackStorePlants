@@ -1,30 +1,41 @@
 import { Request, Response } from "express";
-import Order from "../models/order";
+import Order from '../models/order';
 
 
-export const getAllOrders = async (req:Request, res:Response):Promise<void> =>{
-    const {id} = req.params;
+export const getAllOrders = async (req: Request, res: Response): Promise<void> => {//busca todas las ordenes de compra del usuario logueado
+
     try {
-        const orders = await Order.find({user:id}).populate('Usuario', 'name email');
-            if(orders){
-                res.status(200).json(orders);
-                return;
-            }
-            res.status(404).json({message: 'No orders found'});
+        const orders = await Order.find({ userID: req.user?.id }).populate('products');
+
+        if (orders) {
+            res.status(200).json(orders);
+            return;
+        }
+        res.status(404).json({ message: 'No orders found' });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ message: 'GET ORDER No orders found' });
     }
 }
 
-export const createOrder = async (req:Request, res:Response):Promise<void> =>{
+export const createOrder = async (req: Request, res: Response): Promise<void> => { //crea las ordenes de compras
+    const id = req.user?.id;
+    const { products, name, amount, status, total } = req.body;
 
-    const {user, products, total} = req.body;
     try {
-        const order = new Order({user, products, total});
+        const order = new Order({
+            userID: id,
+            name,
+            products,
+            amount,
+            status,
+            total
+        });
         await order.save();
         res.status(200).json(order);
     } catch (error) {
         console.error(error);
+        res.status(500).json({ message: 'POST - Error creating order' });
     }
 
 

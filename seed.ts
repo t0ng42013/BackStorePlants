@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { DB_Connection } from './src/dataBase/config';
 import Product from './src/models/Product';
+import Order from "./src/models/order";
 
 
 const Productos = [

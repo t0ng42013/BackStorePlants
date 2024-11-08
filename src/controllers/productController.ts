@@ -10,26 +10,15 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
         res.status(200).json(product);
     } catch (error) {
         console.log(error)
+        res.status(500).json({ msg: "GET - Product not found" })
     }
 };
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
-   
-    try {
-        if (!req.user?.isAdmin) {
-            res.status(401).json({
-                msg: 'No autorizado'
-            });
-            return
-        }
-    } catch (error) {
-        throw new Error('Failed token');
-    }
-    const { id, name, img, describe, price, category, stock } = req.body;
-
+    const { id, name, img, imgHover , describe, price, category, stock } = req.body;
 
     try {
-        const product = new Product({ id, name, img, describe, price, category, stock });
+        const product = new Product({ id, name, img, imgHover,describe, price, category, stock });
 
         const productDB = await Product.findOne({ name });
         if (productDB) {
@@ -43,7 +32,7 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         res.status(200).json(product);
     } catch (error) {
         console.log(error)
-
+        res.status(500).json({ msg: "POST - Product not created" })
     }
 };
 
@@ -62,36 +51,27 @@ export const getOneProduct = async (req: Request, res: Response): Promise<void> 
         res.status(200).json(product);
     } catch (error) {
         console.log(error)
-
+        res.status(500).json({ msg: "GET - Product not found" })
     }
 };
 
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
-    if (!req.user?.isAdmin) {
-        res.status(401).json({
-            msg: 'No autorizado'
-        });
-        return
-    }
     const { id } = req.params;
-    const { _id, ...resto } = req.body;
+    const { name, img, imgHover,describe, price, stock, category } = req.body;
     try {
-        const product = await Product.findByIdAndUpdate(id, resto, { new: true });
+        const product = await Product.findByIdAndUpdate(id, 
+            { name, img, imgHover,describe, price, stock, category, updated_at: new Date() },
+            { new: true });
         res.status(200).json(product);
     } catch (error) {
         console.log(error)
-
+        res.status(500).json({ msg: "PUT - Product not updated" })
     }
 };
 
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
-    if (!req.user?.isAdmin) {
-        res.status(401).json({
-            msg: 'No autorizado'
-        });
-        return
-    }
     const { id } = req.params;
+
     try {
         const product = await Product.findByIdAndDelete(id);
         if (!product) {
@@ -101,13 +81,11 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
             return
         }
         res.status(200).json({
-            msg: `Producto con el id ${id} eliminado`
+            msg: `Producto con el id ${id} eliminado`,
+            id
         });
-    } catch (error: any) {
+    } catch (error) {
         console.error(error);
-        res.status(500).json({
-            msg: 'Error al eliminar el producto',
-            error: error.message
-        });
+        res.status(500).json({ msg: 'DEL - Error al eliminar producto', error });
     }
 };

@@ -1,6 +1,5 @@
 import { model, Schema } from "mongoose";
 import { IProduct } from "../interface/IProduct";
-import { updateProduct } from '../controllers/productController';
 
 const ProductSchema = new Schema<IProduct>({
     name:{
@@ -12,6 +11,9 @@ const ProductSchema = new Schema<IProduct>({
         type: String,
         default:'http:img.com'
     },
+    imgHover:{
+        type: String, default:'http:img.com'
+    },
     describe:{
         type: String,
         required: true
@@ -22,7 +24,7 @@ const ProductSchema = new Schema<IProduct>({
     },
     category:{
         type: String,
-        required: true
+        default: 'interior'        
     },
     stock:{
         type: Number,

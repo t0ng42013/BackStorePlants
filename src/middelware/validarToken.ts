@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "../services/jwt";
-import jwt from 'jsonwebtoken';
+import { IToken } from "../interface/IToken";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 
 
-export interface IUserPayload{
-    id:string;
-    isAdmin:boolean;
-}
+
 declare module 'express-serve-static-core' {
     interface Request {
-        user?: IUserPayload; // o define una interface más específica
+        user?: IToken; // o define una interface más específica
     }
 }
 
@@ -22,14 +20,19 @@ export const validarToken = (req:Request,res:Response,next:NextFunction) =>{
         return ;
     }
     try {
-        const {id ,isAdmin}= verifyToken(token) as IUserPayload;
-        req.user = {id,isAdmin};
+        const {id ,role, name,}= verifyToken(token) as IToken;
+        req.user = {id,role,name};
         next();
-    } catch (error:any) {
-        res.status(401).json({ msg: error.message });
-        return;
+    } catch (error) {
+        let errorMessage = 'Token inválido';
+
+        if (error instanceof TokenExpiredError) {
+            errorMessage = 'El token ha expirado';
+        } else if (error instanceof JsonWebTokenError) {
+            errorMessage = 'Token no válido';
+        }
+
+        res.status(401).json({ msg: errorMessage });
+        return 
     }
-       
-    
-   
 }

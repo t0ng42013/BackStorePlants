@@ -6,6 +6,8 @@ import indexRouter from './src/routes/indexRoutes'
 import authRouter from './src/routes/authRoutes'
 import productRouter from './src/routes/productRoutes'
 import orderRouter from './src/routes/orderRoutes'
+import userRoutes from './src/routes/usersRoutes'
+import commentRoutes from './src/routes/commentsRoutes'
 
 export class Server{
     private app: Express;
@@ -14,6 +16,8 @@ export class Server{
     private authPath: string;
     private productPath: string;
     private ordersPath: string;
+    private commentsPath: string;
+    private userPath: string;
 
 
     constructor(){
@@ -23,6 +27,8 @@ export class Server{
         this.authPath = '/auth';
         this.productPath = '/product';
         this.ordersPath = '/orders';
+        this.commentsPath = '/comments';
+        this.userPath = '/user';
 
 
         this.connectDB();
@@ -37,6 +43,7 @@ export class Server{
     private middelware(){
         this.app.use(cors());
         this.app.use(express.json());
+        // seedDatabase();
     };
 
     private routes() {
@@ -45,6 +52,8 @@ export class Server{
         this.app.use(this.authPath, authRouter)
         this.app.use(this.productPath, productRouter)
         this.app.use(this.ordersPath, orderRouter)
+        this.app.use(this.commentsPath, commentRoutes)
+        this.app.use(this.userPath, userRoutes)
     };
 
     public start(){
