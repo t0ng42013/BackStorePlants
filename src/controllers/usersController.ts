@@ -5,7 +5,6 @@ import Usuario from "../models/Usuario";
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
         const usuarios = await Usuario.find();
-        console.log(usuarios);
         res.status(200).json(usuarios)
     } catch (error) {
         console.error(error);

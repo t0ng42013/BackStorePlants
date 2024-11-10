@@ -19,13 +19,7 @@ router.post('/register', [
 router.post('/login',[
     check('name').optional(),
     check('password','El password es obligatorio!').isLength({min:6}),
-    check('email').optional(),
-    // check('name').custom((value,{req})=>{
-        // if(!value && !req.body.email){
-            // throw new Error('El nombre o email es obligatorio');
-        // }
-        // return true;
-    // }),
+    check('email').optional(),   
     errores
 ],login);
 

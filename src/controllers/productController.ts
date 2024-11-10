@@ -15,9 +15,9 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
 };
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
-    const { id, name, img, imgHover , describe, price, category, stock } = req.body;
-
     try {
+        const { id, name, img, imgHover , describe, price, category, stock } = req.body;
+    
         const product = new Product({ id, name, img, imgHover,describe, price, category, stock });
 
         const productDB = await Product.findOne({ name });

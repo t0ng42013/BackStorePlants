@@ -1,6 +1,6 @@
 import express,{ Express } from "express";
-import cors from "cors";
 import { DB_Connection } from './src/dataBase/config';
+import cors from "cors";
 
 import indexRouter from './src/routes/indexRoutes'
 import authRouter from './src/routes/authRoutes'
@@ -8,6 +8,11 @@ import productRouter from './src/routes/productRoutes'
 import orderRouter from './src/routes/orderRoutes'
 import userRoutes from './src/routes/usersRoutes'
 import commentRoutes from './src/routes/commentsRoutes'
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerOptions from "./src/config/swagger.config";
+
+
 
 export class Server{
     private app: Express;
@@ -25,7 +30,7 @@ export class Server{
         this.port = Number(process.env.PORT) || 3000;
         this.indexPath = '/';
         this.authPath = '/auth';
-        this.productPath = '/product';
+        this.productPath = '/products';
         this.ordersPath = '/orders';
         this.commentsPath = '/comments';
         this.userPath = '/user';
@@ -43,7 +48,10 @@ export class Server{
     private middelware(){
         this.app.use(cors());
         this.app.use(express.json());
-        // seedDatabase();
+        
+        // Swagger setup
+        const specs = swaggerJSDoc(swaggerOptions);
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
     };
 
     private routes() {

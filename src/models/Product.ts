@@ -4,23 +4,24 @@ import { IProduct } from "../interface/IProduct";
 const ProductSchema = new Schema<IProduct>({
     name:{
         type: String,
-        required: true,
+        required: [true, 'El nombre es obligatorio'],
         index: true,
     },
     img:{
         type: String,
-        default:'http:img.com'
+        required:[true, 'La imagen principal es obligatoria'],
     },
     imgHover:{
-        type: String, default:'http:img.com'
+        type: String,
+        default:'http:img.com',        
     },
     describe:{
         type: String,
-        required: true
+        default: 'Plantas de interior'
     },
     price:{
         type: Number,
-        required: true
+        required: [true, 'El precio es obligatorio']
     },
     category:{
         type: String,
@@ -28,8 +29,8 @@ const ProductSchema = new Schema<IProduct>({
     },
     stock:{
         type: Number,
-        required: true,
-        default: 50,
+        required: [true, 'El stock es obligatorio'],
+        default: 10,
     },
     created_at: {
         type: Date,

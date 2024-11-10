@@ -15,7 +15,6 @@ export const getAllComments = async (req: Request, res: Response) => {
 
 export const createComment = async (req: Request, res: Response) => {
     const id = req.user?.id;
-    console.log(req.user)
     const { comment } = req.body;
     try {
         const newComment = new Comment({ comment, userID: id, userName: req.user?.name });

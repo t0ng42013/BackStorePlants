@@ -7,14 +7,14 @@ const OrderSchema = new Schema<IOrder>({
     products: [
         {
             productID: { type: Schema.Types.ObjectId, ref: 'Product' },
-            name: { type: String, required: true },
-            quantity: { type: Number, required: true },
-            price: { type: Number, required: true }
+            name: { type: String, required:[ true, 'El nombre es obligatorio' ]},
+            quantity: { type: Number, required:[ true, 'La cantidad es obligatorio' ]},
+            price: { type: Number, required:[ true, 'El precio es obligatorio' ]}
         }
     ],
-    amount: { type: Number, required: true },
+    amount: { type: Number, required: [true , 'El monto es obligatio'] },
     status: { type: Boolean, default: false },
-    total: { type: Number, required: true },
+    total: { type: Number, required: [true, 'El total de la compra es obligatorio'] },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
 
