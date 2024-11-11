@@ -117,7 +117,7 @@ curl -X GET "http://localhost:8080/protected-endpoint"
 La documentación de la API está disponible en:
 
 ```bash
-http://localhost:8080/api-docs
+https://back-store-plants.vercel.app/api-docs
 ```
 
 ## 🤝 Contribuir

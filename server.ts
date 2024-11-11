@@ -49,6 +49,8 @@ export class Server{
         this.app.use(cors());
         this.app.use(express.json());
         
+        this.app.use(express.static('public'));
+        
         // Swagger setup
         const specs = swaggerJSDoc(swaggerOptions);
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
