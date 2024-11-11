@@ -52,7 +52,6 @@ export class Server{
         this.app.use(express.static('public'));
 
         // Swagger setup
-        // Swagger setup
         const specs = swaggerJSDoc(swaggerOptions);
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
             customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
