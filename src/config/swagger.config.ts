@@ -18,7 +18,7 @@ const swaggerOptions: Options = {
                 description: 'Development server'
             },
             {
-                url: 'https://back-store-plants.vercel.app/',  // Tu URL de producción
+                url: 'back-store-plants.vercel.app',  
                 description: 'Production server'
             }
         ],
