@@ -1,4 +1,3 @@
-import { format } from 'path';
 import { Options } from 'swagger-jsdoc';
 
 const swaggerOptions: Options = {
