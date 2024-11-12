@@ -46,7 +46,13 @@ export class Server{
     }
 
     private middelware(){
-        this.app.use(cors());
+        this.app.use(cors(
+            {
+                origin: 'https://jardin-ten.vercel.app',
+                methods: ['GET', 'POST', 'PUT', 'DELETE'],
+                allowedHeaders: ['Content-Type', 'Authorization','x-token'],
+            }
+        ));
         this.app.use(express.json());
         
         this.app.use(express.static('public'));
