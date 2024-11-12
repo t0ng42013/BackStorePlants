@@ -51,6 +51,7 @@ export class Server{
                 origin: 'https://jardin-ten.vercel.app',
                 methods: ['GET', 'POST', 'PUT', 'DELETE'],
                 allowedHeaders: ['Content-Type', 'Authorization','x-token'],
+                credentials: true, 
             }
         ));
         this.app.use(express.json());
